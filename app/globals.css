@@ -3,19 +3,109 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0b;
+  --foreground: #ffffff;
+  --accent-purple-rgb: 120, 87, 255;
+  --accent-blue-rgb: 59, 130, 246;
+  --accent-pink-rgb: 236, 72, 153;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Dark mode is already handled by our dark theme values above */
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", sans-serif;
+}
+
+/* Utility Classes */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#7C5DFA] via-accent-blue to-accent-pink;
+}
+
+.glow-effect {
+  @apply relative;
+}
+
+.glow-effect::after {
+  content: "";
+  @apply absolute -z-10 blur-[100px] bg-accent-purple/20 rounded-full;
+  width: 150%;
+  height: 150%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+}
+
+.button-gradient {
+  @apply bg-gradient-to-r from-accent-purple to-accent-blue hover:from-accent-blue hover:to-accent-purple transition-all duration-300;
+}
+
+.glass-effect {
+  @apply bg-white/[0.02] backdrop-blur-sm border border-white/[0.05];
+}
+
+.hover-lift {
+  @apply transition-transform duration-300 hover:-translate-y-1;
+}
+
+/* 3D Icon Effects */
+.icon-3d {
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.icon-3d::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.05)
+  );
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.group-hover .glow-effect::after,
+*:hover > .glow-effect::after {
+  opacity: 0.2;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--accent-purple-rgb) / 0.5),
+    rgb(var(--accent-blue-rgb) / 0.5)
+  );
+  border-radius: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--accent-purple-rgb) / 0.8),
+    rgb(var(--accent-blue-rgb) / 0.8)
+  );
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-purple) rgba(255, 255, 255, 0.05);
 }
