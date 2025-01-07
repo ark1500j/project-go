@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useState, MouseEventHandler } from "react";
+import { useState } from "react";
 
 // Define the Footer component
 const Footer: React.FC = () => {
